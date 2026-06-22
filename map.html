@@ -260,8 +260,8 @@
   }
 
   function initMap(){
-    map = new naver.maps.Map('map', { center:new naver.maps.LatLng(33.40,126.74), zoom:10 });
-    selectLayer(0);
+    map = new naver.maps.Map('map', { center:new naver.maps.LatLng(33.40,126.55), zoom:10 });
+    selectLayer(1); // 기본: 제주대회 전체 교회 보기
   }
 
   if (window.naver && naver.maps) {
@@ -270,7 +270,7 @@
     document.getElementById('keyWarn').style.display = 'block';
     document.getElementById('map').innerHTML =
       '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#7a6f63;font-size:14px;text-align:center;padding:20px;">네이버 지도 API 키를 설정하면<br>이곳에 순례 코스가 표시됩니다.</div>';
-    selectLayer(0); // 키가 없어도 사이드바 정보는 표시
+    selectLayer(1); // 키가 없어도 사이드바 정보는 표시
   }
   </script>
 </body>
