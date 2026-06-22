@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>제주 한국재림교회 산티아고 순례길</title>
+  <!--
+    ▣ 네이버 지도 API 키 발급 안내
+      1) https://www.ncloud.com 가입 → 콘솔 → AI·NAVER API → Maps(Application 등록)
+      2) Web 서비스 URL 등록(예: http://localhost, 배포 도메인)
+      3) 발급된 "Key ID"를 아래 script의 YOUR_NCP_KEY_ID 자리에 넣으세요.
+         (구버전은 ncpClientId, 신버전은 ncpKeyId 파라미터를 사용합니다)
+  -->
+  <script type="text/javascript"
+    src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=YOUR_NCP_KEY_ID"></script>
+  <style>
+    :root{
+      --ink:#2b2320; --wine:#c0392b; --sand:#f6f1e7; --line:#e4dccb; --muted:#7a6f63;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink);background:var(--sand);}
+    nav.top{position:sticky;top:0;z-index:30;background:rgba(122,31,26,.96);backdrop-filter:blur(6px);
+      display:flex;gap:18px;align-items:center;padding:12px 22px;color:#fff;font-size:14px;}
+    nav.top b{font-size:15px;}
+    nav.top a{color:#fff;text-decoration:none;opacity:.9;}
+    nav.top a:hover,nav.top a.active{opacity:1;text-decoration:underline;}
+    nav.top .spacer{flex:1;}
+    header{padding:28px 22px 18px;background:linear-gradient(160deg,#7a1f1a,#c0392b);color:#fff;}
+    header h1{margin:0;font-size:22px;letter-spacing:-.5px;}
+    header p{margin:8px 0 0;opacity:.92;font-size:14px;line-height:1.5;}
+    .badge{display:inline-block;margin-top:10px;padding:4px 10px;border:1px solid rgba(255,255,255,.5);
+      border-radius:20px;font-size:12px;}
+    .wrap{display:flex;flex-wrap:wrap;}
+    #map{flex:1 1 540px;height:72vh;min-height:420px;background:#dfe6ea;}
+    aside{flex:1 1 340px;max-width:440px;height:72vh;overflow-y:auto;padding:18px 20px;background:#fff;border-left:1px solid var(--line);}
+    aside h2{font-size:16px;margin:4px 0 2px;color:var(--wine);}
+    .olle{font-size:12px;color:var(--muted);margin:0 0 12px;}
+    .summary{font-size:13px;line-height:1.6;background:var(--sand);padding:12px;border-radius:10px;margin-bottom:16px;}
+    .stop{border-left:3px solid var(--line);padding:0 0 16px 14px;position:relative;cursor:pointer;}
+    .stop::before{content:'';position:absolute;left:-7px;top:3px;width:11px;height:11px;border-radius:50%;
+      background:var(--wine);border:2px solid #fff;box-shadow:0 0 0 1px var(--wine);}
+    .stop:hover h3{text-decoration:underline;}
+    .stop .num{font-size:11px;color:var(--wine);font-weight:700;}
+    .stop h3{margin:2px 0 3px;font-size:15px;}
+    .stop .year{font-size:11px;color:var(--muted);}
+    .stop p{margin:6px 0 0;font-size:13px;line-height:1.6;color:#473d35;}
+    .roadmap{margin-top:22px;padding-top:16px;border-top:1px dashed var(--line);}
+    .roadmap h2{color:var(--ink);}
+    .roadmap ul{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--muted);}
+    .note{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.5;}
+    footer{padding:14px 22px;font-size:11px;color:var(--muted);background:#fff;border-top:1px solid var(--line);}
+    .warn{background:#fff5f3;border:1px solid #f3c6bd;color:#8a2c20;padding:10px 12px;border-radius:8px;
+      font-size:12px;line-height:1.5;margin:0 0 14px;display:none;}
+    .selector{display:flex;gap:8px;margin:0 0 14px;}
+    .selector button{flex:1;padding:8px 6px;font-size:12px;font-weight:700;cursor:pointer;
+      border:1px solid var(--line);background:#fff;color:var(--muted);border-radius:8px;}
+    .selector button.active{background:var(--wine);color:#fff;border-color:var(--wine);}
+  </style>
+</head>
+<body>
+  <nav class="top">
+    <b>⛪ 제주 재림교회 순례길</b>
+    <a href="index.html">홈</a>
+    <a href="map.html" class="active">지도</a>
+    <a href="story.html">코스 이야기</a>
+    <span class="spacer"></span>
+    <a href="자료조사.md">사료</a>
+  </nav>
+
+  <header>
+    <h1>⛪ 제주 한국재림교회 산티아고 순례길</h1>
+    <p>한국재림교회사에 기록된 유적지를 따라, 그 시절 성도들이 걸어갔을 길을 다음 세대와 함께 걷습니다.</p>
+    <span class="badge" id="courseBadge">제1코스 · 전란 중에 핀 꽃 (성산 순례길)</span>
+    <a class="badge" href="story.html" style="text-decoration:none;color:#fff;">📖 코스 이야기 보기 →</a>
+  </header>
+
+  <div class="wrap">
+    <div id="map"></div>
+    <aside>
+      <div class="warn" id="keyWarn">
+        ⚠️ 네이버 지도 API 키가 설정되지 않았습니다. <code>index.html</code>의
+        <code>YOUR_NCP_KEY_ID</code>를 발급받은 키로 바꿔주세요. 지금은 코스 정보만 표시됩니다.
+      </div>
+      <div class="selector" id="selector"></div>
+      <h2 id="cName"></h2>
+      <p class="olle" id="cOlle"></p>
+      <div class="summary" id="cSummary"></div>
+      <div id="stopList"></div>
+
+      <div class="roadmap">
+        <h2>다음 단계 (기획 로드맵)</h2>
+        <ul>
+          <li>1단계 — 순례길 정보 제공 <b>(현재)</b></li>
+          <li>2단계 — 진행 중인 순례자 목록 / 나의 완료 목록</li>
+          <li>3단계 — 사진 공유 · 스탬프/기념핀 인증</li>
+          <li>4단계 — 명예의 전당 · 도움 정보(숙박·교통·편의)</li>
+        </ul>
+        <p class="note">
+          코스는 한국재림교회사·재림마을(재림신문)·디지털제주문화대전 자료를 근거로 구성했으며,
+          좌표는 추정치로 네이버 지도 실측 보정이 필요합니다. 자세한 사료는 <code>자료조사.md</code> 참고.
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    출처: 한국 재림교회 역사 · 디지털제주문화대전 · 재림교회 스토리(성산교회 선교 70돌) · 재림신문(재림마을) ·
+    한국민족문화대백과사전 · 삼육서울병원 역사관 — 1차 수집 2026-06-22
+  </footer>
+
+  <!-- 코스 데이터 (data/courses.json 과 동일, 오프라인 열람용 인라인) -->
+  <script>
+  const LAYERS = [
+    {
+      id:"seongsan", type:"course",
+      name:"제1코스 · 전란 중에 핀 꽃 (성산 순례길)",
+      color:"#c0392b",
+      olle:"제주올레 1코스(시흥–광치기)·2코스(광치기–온평)와 겹침",
+      summary:"1951년 1·4후퇴 때 '아가리배'(LST)가 성산포항에 닿은 자리에서 시작해, 첫 예배·진료소가 세워진 성산초등학교를 지나, 제주 최초의 재림 성전이 헌당된 고성리에 이르는 길.",
+      stops:[
+        {order:1, name:"성산포항 (피난선 상륙지)", lat:33.4744, lng:126.9420, year:"1951.01.14", confirmed:true,
+          story:"부산항을 떠난 상륙함(LST·제주도민들은 '아가리배'라 불렀다)에 한국연합회·서울위생병원 성도 중심 피난민 902명이 승선. 1월 14일 밤 9시 성산포항에 닿았다. 제주 재림교회 역사가 시작된 자리."},
+        {order:2, name:"성산초등학교 (구 성산동국민학교)", lat:33.4628, lng:126.9342, year:"1951.01.20", confirmed:true,
+          story:"1월 20일 첫 안식일예배. 이튿날부터 교실 한 칸에 진료소를 차리니 '서울위생병원 제주분원'. 하루 100~350명, 장날엔 600명까지 무료 진료했다."},
+        {order:3, name:"성산일출봉·광치기해변", lat:33.4520, lng:126.9305, year:"경유지", confirmed:true,
+          story:"올레 1코스 종점·2코스 시작점. 일출봉을 바라보며 묵상하는 해안 경유 구간."},
+        {order:4, name:"오조리 (정착 마을)", lat:33.4670, lng:126.9200, year:"1951", confirmed:true,
+          story:"피난민들은 성산포·신양리·오조리·고성리에 흩어져 정착하며 복음을 전했다."},
+        {order:5, name:"성산교회 (고성리)", lat:33.4505, lng:126.9180, year:"현재", confirmed:true,
+          story:"1951년 피난 성도들이 세운 신앙 공동체의 오늘. 제주 최초 재림교회의 맥을 잇는다. 현 주소: 성산읍 동류암로 33."},
+        {order:6, name:"성산 피난교회 옛 터 (제주 최초 돌 성전)", lat:33.4500, lng:126.9170, year:"1951.12.09 헌당", confirmed:false,
+          story:"4월 기초공사·5월 돌 쌓기·12월 9일 42평 돌 성전 헌당 — 제주 최초의 재림 성전. 지금은 비신자가 식당으로 사용 중이어서 문화유산 등록·'되찾기' 운동의 대상. 순례의 상징적 종착점. ※정확한 위치 확인 필요."}
+      ]
+    },
+    {
+      id:"overview", type:"overview",
+      name:"제주 전역 재림교회 (개요)",
+      color:"#2e6da4",
+      olle:"권역별 추가 코스(2·3코스) 발굴 예정",
+      summary:"제주 지구는 9개 교회 + 2개 예배소. 제주시·서귀포 권역 교회들의 설립 연혁·정확 위치는 조사 중이며, 향후 권역별 순례 코스로 확장합니다.",
+      stops:[
+        {order:1, name:"성산교회 (성산읍)", lat:33.4505, lng:126.9180, year:"1951", confirmed:true,
+          story:"제주 최초의 재림교회. 제1코스 종착 권역."},
+        {order:2, name:"제주중앙교회 (제주시)", lat:33.4730, lng:126.5410, year:"조사중", confirmed:false,
+          story:"제주시 간월동로 77(아라2동). 제주시 권역의 중심 교회. 설립 연혁 조사 중."},
+        {order:3, name:"제주학원교회 (제주시)", lat:33.4830, lng:126.5300, year:"조사중", confirmed:false,
+          story:"제주시 권역. 위치·연혁 조사 중."},
+        {order:4, name:"제주본부교회 (제주시)", lat:33.4990, lng:126.5310, year:"조사중", confirmed:false,
+          story:"제주시 권역. 위치·연혁 조사 중."},
+        {order:5, name:"서귀포교회 (서귀포시)", lat:33.2540, lng:126.5620, year:"조사중", confirmed:false,
+          story:"서귀포 권역. 위치·연혁 조사 중."},
+        {order:6, name:"신서귀포교회 (서귀포시)", lat:33.2530, lng:126.5060, year:"조사중", confirmed:false,
+          story:"서귀포 신시가지 권역. 위치·연혁 조사 중."}
+      ]
+    }
+  ];
+
+  const listEl   = document.getElementById('stopList');
+  const selEl    = document.getElementById('selector');
+  const badgeEl  = document.getElementById('courseBadge');
+  let map = null, overlays = [], infos = [];
+
+  // ---- 레이어 선택 버튼 ----
+  LAYERS.forEach((L, i) => {
+    const b = document.createElement('button');
+    b.textContent = L.type === 'course' ? '🥾 성산 코스' : '🗺️ 제주 전역';
+    b.dataset.idx = i;
+    b.addEventListener('click', () => selectLayer(i));
+    selEl.appendChild(b);
+  });
+
+  function selectLayer(idx){
+    const L = LAYERS[idx];
+    [...selEl.children].forEach((b,i)=>b.classList.toggle('active', i===idx));
+    badgeEl.textContent = L.name;
+    document.getElementById('cName').textContent = L.name;
+    document.getElementById('cOlle').textContent = "🥾 " + L.olle;
+    document.getElementById('cSummary').textContent = L.summary;
+    renderList(L);
+    if (map) renderMap(L);
+  }
+
+  // ---- 사이드바 정류장 목록 ----
+  function renderList(L){
+    listEl.innerHTML = '';
+    L.stops.forEach(s => {
+      const d = document.createElement('div');
+      d.className = 'stop';
+      d.dataset.order = s.order;
+      const tag = s.confirmed ? '' : ' <span style="color:#a98">· 조사중</span>';
+      const label = L.type === 'course' ? `STOP ${s.order} · ${s.year}` : `${s.year}`;
+      d.innerHTML = `<div class="num">${label}${tag}</div>
+        <h3>${s.name}</h3><p>${s.story}</p>`;
+      listEl.appendChild(d);
+    });
+  }
+
+  // ---- 네이버 지도 렌더링 ----
+  function clearMap(){
+    overlays.forEach(o=>o.setMap(null)); overlays = [];
+    infos.forEach(i=>i.close()); infos = [];
+  }
+
+  function renderMap(L){
+    clearMap();
+    const path = [];
+    L.stops.forEach(s => {
+      const pos = new naver.maps.LatLng(s.lat, s.lng);
+      if (L.type === 'course') path.push(pos);
+      const bg = s.confirmed ? L.color : '#9aa7b0';
+      const marker = new naver.maps.Marker({
+        position: pos, map, title: s.name,
+        icon: {
+          content:`<div style="background:${bg};color:#fff;width:26px;height:26px;border-radius:50%;
+            display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
+            border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4)">${s.order}</div>`,
+          anchor: new naver.maps.Point(13,13)
+        }
+      });
+      overlays.push(marker);
+      const tag = s.confirmed ? '' : ' <span style="color:#c0392b">· 조사중</span>';
+      const info = new naver.maps.InfoWindow({
+        content:`<div style="padding:12px 14px;max-width:260px;font-family:sans-serif;">
+          <div style="font-size:11px;color:${L.color};font-weight:700;">${s.year}${tag}</div>
+          <div style="font-size:15px;font-weight:700;margin:3px 0 6px;">${s.name}</div>
+          <div style="font-size:13px;line-height:1.6;color:#473d35;">${s.story}</div></div>`,
+        borderWidth:0, backgroundColor:'#fff'
+      });
+      infos.push(info);
+      naver.maps.Event.addListener(marker, 'click', () => { infos.forEach(i=>i.close()); info.open(map, marker); });
+      const card = listEl.querySelector(`[data-order="${s.order}"]`);
+      if(card) card.addEventListener('click', ()=>{
+        map.setCenter(pos); map.setZoom(L.type==='course'?15:12);
+        infos.forEach(i=>i.close()); info.open(map, marker);
+      });
+    });
+
+    // 코스형일 때만 동선(점선) 표시
+    if (L.type === 'course' && path.length > 1){
+      const line = new naver.maps.Polyline({ map, path,
+        strokeColor:L.color, strokeWeight:4, strokeOpacity:0.85, strokeStyle:'shortdash' });
+      overlays.push(line);
+    }
+
+    // 영역 맞춤
+    const all = L.stops.map(s=>new naver.maps.LatLng(s.lat,s.lng));
+    const bounds = new naver.maps.LatLngBounds(all[0], all[0]);
+    all.forEach(p=>bounds.extend(p));
+    map.fitBounds(bounds);
+  }
+
+  function initMap(){
+    map = new naver.maps.Map('map', { center:new naver.maps.LatLng(33.40,126.74), zoom:10 });
+    selectLayer(0);
+  }
+
+  if (window.naver && naver.maps) {
+    initMap();
+  } else {
+    document.getElementById('keyWarn').style.display = 'block';
+    document.getElementById('map').innerHTML =
+      '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#7a6f63;font-size:14px;text-align:center;padding:20px;">네이버 지도 API 키를 설정하면<br>이곳에 순례 코스가 표시됩니다.</div>';
+    selectLayer(0); // 키가 없어도 사이드바 정보는 표시
+  }
+  </script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>코스 이야기 · 제주 한국재림교회 순례길</title>
+  <style>
+    :root{
+      --ink:#2b2320; --wine:#c0392b; --deep:#7a1f1a; --sand:#f6f1e7;
+      --paper:#fffdf8; --line:#e4dccb; --muted:#7a6f63;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;color:var(--ink);
+      background:var(--sand);line-height:1.75;}
+    a{color:var(--wine);}
+    /* ── 상단 네비 ── */
+    nav{position:sticky;top:0;z-index:20;background:rgba(122,31,26,.96);backdrop-filter:blur(6px);
+      display:flex;gap:18px;align-items:center;padding:12px 22px;color:#fff;font-size:14px;}
+    nav b{font-size:15px;}
+    nav a{color:#fff;text-decoration:none;opacity:.9;}
+    nav a:hover{opacity:1;text-decoration:underline;}
+    nav .spacer{flex:1;}
+    /* ── 히어로 ── */
+    .hero{background:linear-gradient(160deg,#7a1f1a,#c0392b);color:#fff;padding:54px 22px 46px;text-align:center;}
+    .hero .eyebrow{letter-spacing:3px;font-size:12px;opacity:.85;}
+    .hero h1{margin:10px 0 6px;font-size:30px;letter-spacing:-1px;}
+    .hero .lead{max-width:620px;margin:14px auto 0;font-size:15px;opacity:.94;}
+    .hero .meta{margin-top:20px;font-size:13px;opacity:.9;}
+    .hero .meta span{display:inline-block;margin:0 8px;padding:5px 12px;border:1px solid rgba(255,255,255,.45);border-radius:20px;}
+    /* ── 본문 ── */
+    main{max-width:760px;margin:0 auto;padding:8px 20px 60px;}
+    section{background:var(--paper);border:1px solid var(--line);border-radius:14px;
+      padding:26px 28px;margin:26px 0;box-shadow:0 1px 0 rgba(0,0,0,.02);}
+    .intro h2{color:var(--wine);font-size:20px;margin:0 0 10px;}
+    .intro p{font-size:15px;color:#43392f;}
+    .why{background:var(--sand);border:none;}
+    .why h2{font-size:18px;margin:0 0 8px;}
+    /* ── 정류장 ── */
+    .stop{position:relative;}
+    .stop .rail{position:absolute;left:34px;top:78px;bottom:-26px;width:2px;background:var(--line);}
+    .stop:last-of-type .rail{display:none;}
+    .stop .head{display:flex;align-items:center;gap:14px;margin-bottom:6px;}
+    .stop .dot{flex:none;width:42px;height:42px;border-radius:50%;background:var(--wine);color:#fff;
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;
+      border:3px solid #fff;box-shadow:0 0 0 1px var(--wine);}
+    .stop .titlebox h3{margin:0;font-size:19px;}
+    .stop .titlebox .when{font-size:12px;color:var(--wine);font-weight:700;letter-spacing:.5px;}
+    .stop .place{font-size:12px;color:var(--muted);margin:2px 0 0;}
+    .stop .body{padding-left:56px;}
+    .stop .body p{font-size:15px;color:#43392f;margin:10px 0;}
+    .stop blockquote{margin:14px 0;padding:12px 16px;border-left:4px solid var(--wine);
+      background:var(--sand);border-radius:0 8px 8px 0;font-size:14px;color:#5a4d42;}
+    .pill{display:inline-block;font-size:11px;background:#f2e7e4;color:var(--deep);
+      padding:3px 9px;border-radius:20px;margin-right:6px;}
+    .walk{font-size:13px;color:var(--muted);margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);}
+    /* ── 마무리 ── */
+    .voices h2{color:var(--wine);font-size:20px;margin:0 0 4px;}
+    .voices .sub{font-size:13px;color:var(--muted);margin:0 0 18px;}
+    .voice{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:14px 0;background:#fff;}
+    .voice .who{font-size:13px;color:var(--wine);font-weight:700;margin-bottom:6px;}
+    .voice .who span{color:var(--muted);font-weight:400;}
+    .voice p{margin:0;font-size:15px;color:#43392f;}
+    .voice .q{font-size:16px;color:#2b2320;font-weight:600;line-height:1.7;}
+    .navactive{text-decoration:underline;}
+    .closing{background:linear-gradient(160deg,#fffaf3,#f6ece1);text-align:center;}
+    .closing h2{color:var(--wine);}
+    .closing .verse{font-size:15px;color:#5a4d42;font-style:italic;}
+    footer{text-align:center;font-size:11px;color:var(--muted);padding:24px;}
+    @media(max-width:560px){.hero h1{font-size:24px;}.stop .body{padding-left:0;}.stop .rail{display:none;}}
+  </style>
+</head>
+<body>
+  <nav>
+    <b>⛪ 제주 재림교회 순례길</b>
+    <a href="index.html">홈</a>
+    <a href="map.html">지도</a>
+    <a href="story.html" class="navactive">코스 이야기</a>
+    <span class="spacer"></span>
+    <a href="자료조사.md">사료</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">JEJU ADVENTIST CAMINO · COURSE 1</div>
+    <h1>전란 중에 핀 꽃</h1>
+    <p class="lead">바다를 건너온 한 척의 배에서 시작된 믿음의 이야기.<br>
+      1951년 그 겨울, 성도들이 걸었던 길을 오늘 다시 걷습니다.</p>
+    <div class="meta">
+      <span>🥾 성산 순례길</span>
+      <span>📍 6개 정류장</span>
+      <span>🗺️ 제주올레 1·2코스 연계</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- 코스 소개 -->
+    <section class="intro">
+      <h2>이 길에 대하여</h2>
+      <p>제주 재림교회의 역사는 평화로운 포교가 아니라 <b>전쟁의 한복판</b>에서 시작되었습니다.
+        1951년 1·4후퇴, 모든 것을 잃고 남쪽 끝까지 밀려온 사람들이 마지막으로 닿은 땅이 제주였습니다.
+        그들은 피난지에서 예배를 멈추지 않았고, 자신들도 가진 것 없는 처지에 병든 이웃을 무료로 돌봤으며,
+        돌을 하나하나 쌓아 성전을 세웠습니다.</p>
+      <p>이 순례길은 그 발자취를 따라갑니다. <b>피난선이 닿은 성산포항</b>에서 출발해,
+        <b>첫 예배와 진료소가 열린 성산초등학교</b>를 지나, 정착의 마을을 거쳐
+        <b>제주 최초의 재림 성전이 헌당된 고성리 성산교회</b>에서 마칩니다.
+        길의 상당 구간이 <b>제주올레 1·2코스</b>와 겹쳐, 제주의 바다와 들길을 함께 누릴 수 있습니다.</p>
+    </section>
+
+    <!-- 왜 걷는가 -->
+    <section class="why">
+      <h2>왜 이 길을 걷는가</h2>
+      <p>산티아고 순례길이 그러하듯, 이 길은 단지 풍경을 보러 가는 길이 아닙니다.
+        믿음의 선배들이 가장 어두운 시절에 어떻게 빛을 지켰는지를 두 발로 더듬어 보는 길,
+        그리고 그 이야기를 <b>다음 세대에게 건네주는</b> 길입니다.
+        각 정류장에서 스탬프를 모으고, 길의 끝에서 기념핀을 받으며,
+        70여 년 전 그 겨울의 온기를 오늘의 우리가 이어받습니다.</p>
+    </section>
+
+    <!-- STOP 1 -->
+    <section class="stop">
+      <div class="rail"></div>
+      <div class="head">
+        <div class="dot">1</div>
+        <div class="titlebox">
+          <div class="when">1951. 1. 14. 밤 9시</div>
+          <h3>성산포항 — 피난선이 닿은 자리</h3>
+          <p class="place">제주 서귀포시 성산읍 성산리 · 성산항</p>
+        </div>
+      </div>
+      <div class="body">
+        <p>1951년 1월 11일, 부산항에서 미군 상륙함(LST) 한 척이 닻을 올렸습니다.
+          그 배에는 한국연합회와 서울위생병원 성도를 중심으로 한 <b>피난민 902명</b>이 타고 있었습니다.
+          고향도, 교회도, 병원도 모두 뒤로한 채 오직 목숨과 믿음만을 안고 떠난 길이었습니다.
+          훗날 제주 사람들은 이 낯선 상륙함을 <b>‘아가리배’</b>라 불렀습니다.</p>
+        <p>사흘 동안 거친 겨울 바다를 헤친 배는 1월 14일 밤 9시, 마침내 성산포항에 닿았습니다.
+          어둠 속에서 사람들이 한 명씩 뭍을 밟던 그 순간이, <b>제주 재림교회 역사가 시작된 첫 페이지</b>입니다.</p>
+        <blockquote>한 척의 배가 싣고 온 것은 피난민이 아니라, 제주에 뿌려질 한 알의 씨앗이었습니다.</blockquote>
+        <div><span class="pill">출발점</span><span class="pill">제주올레 1코스 인근</span></div>
+        <p class="walk">🥾 일출봉을 등진 항구에서 바다를 바라보며 순례를 시작합니다.</p>
+      </div>
+    </section>
+
+    <!-- STOP 2 -->
+    <section class="stop">
+      <div class="rail"></div>
+      <div class="head">
+        <div class="dot">2</div>
+        <div class="titlebox">
+          <div class="when">1951. 1. 20. ~</div>
+          <h3>성산초등학교 — 첫 예배와 진료소</h3>
+          <p class="place">성산읍 성산중앙로25번길 6 (구 성산동국민학교)</p>
+        </div>
+      </div>
+      <div class="body">
+        <p>도착하고 엿새가 지난 1월 20일 오전, 피난민들은 <b>성산동국민학교(현 성산초등학교)</b> 교실에 모여
+          제주에서의 <b>첫 안식일예배</b>를 드렸습니다. 의자도 강단도 없는 빈 교실이었지만,
+          그곳이 제주 첫 예배당이었습니다.</p>
+        <p>그리고 이튿날, 그들은 교실 한 칸을 비워 <b>진료소</b>를 차렸습니다.
+          사람들은 이곳을 <b>‘서울위생병원(현 삼육서울병원) 제주분원’</b>이라 불렀습니다.
+          전쟁으로 의료가 끊긴 섬에서, 피난 온 의료진은 <b>하루 평균 100~350명</b>,
+          장이 서는 날이면 <b>600명</b>에 이르는 전염병 환자를 <b>무료로</b> 돌봤습니다.
+          자기들도 빈손인 처지에 말입니다.</p>
+        <blockquote>가진 것이 없어도 나눌 수 있다는 것 — 제주 사람들이 재림교회를 처음 신뢰하게 된 이유였습니다.</blockquote>
+        <div><span class="pill">첫 예배지</span><span class="pill">서울위생병원 제주분원</span></div>
+        <p class="walk">🥾 항구에서 마을 안쪽으로, 성도들의 첫 정착 동선을 따라 걷습니다.</p>
+      </div>
+    </section>
+
+    <!-- STOP 3 -->
+    <section class="stop">
+      <div class="rail"></div>
+      <div class="head">
+        <div class="dot">3</div>
+        <div class="titlebox">
+          <div class="when">경유지</div>
+          <h3>성산일출봉 · 광치기해변 — 묵상의 바닷길</h3>
+          <p class="place">성산읍 성산리·고성리 경계</p>
+        </div>
+      </div>
+      <div class="body">
+        <p>정착의 마을로 향하는 길목에 제주에서 가장 먼저 해가 뜨는 <b>성산일출봉</b>과
+          썰물 때 너른 암반이 드러나는 <b>광치기해변</b>이 펼쳐집니다.
+          이곳은 <b>제주올레 1코스의 종점이자 2코스의 시작점</b>으로, 순례길과 올레길이 하나로 만나는 구간입니다.</p>
+        <p>먼 바다를 건너온 이들이 매일 마주했을 일출을 바라보며,
+          잠시 걸음을 멈추고 그 겨울의 마음을 헤아려 봅니다.</p>
+        <div><span class="pill">올레 1·2코스 연결</span><span class="pill">일출 묵상</span></div>
+        <p class="walk">🥾 해안 암반길 — 발밑을 살피며 천천히, 바다를 곁에 두고 걷습니다.</p>
+      </div>
+    </section>
+
+    <!-- STOP 4 -->
+    <section class="stop">
+      <div class="rail"></div>
+      <div class="head">
+        <div class="dot">4</div>
+        <div class="titlebox">
+          <div class="when">1951</div>
+          <h3>오조리 — 흩어져 뿌리내린 마을</h3>
+          <p class="place">성산읍 오조리 (내수면 일대)</p>
+        </div>
+      </div>
+      <div class="body">
+        <p>피난민들은 한곳에 머물지 않고 <b>성산포 · 신양리 · 오조리 · 고성리</b>로 흩어져 정착했습니다.
+          흩어짐은 곧 씨앗의 흩뿌림이었습니다. 잔잔한 내수면을 낀 <b>오조리</b>는 그 정착의 한 터전으로,
+          이웃과 부대끼며 살아가는 가운데 자연스레 믿음이 전해진 마을입니다.</p>
+        <blockquote>교회는 건물이 아니라 사람을 통해 마을로 스며들었습니다.</blockquote>
+        <div><span class="pill">정착 마을</span><span class="pill">생활 속 선교</span></div>
+        <p class="walk">🥾 마을 안길과 내수면을 따라, 정착민의 일상 동선을 걷습니다.</p>
+      </div>
+    </section>
+
+    <!-- STOP 5 -->
+    <section class="stop">
+      <div class="rail"></div>
+      <div class="head">
+        <div class="dot">5</div>
+        <div class="titlebox">
+          <div class="when">1951. 12. 9. 헌당</div>
+          <h3>성산교회 — 돌로 쌓아 올린 첫 성전</h3>
+          <p class="place">성산읍 동류암로 33 (고성리)</p>
+        </div>
+      </div>
+      <div class="body">
+        <p>그해 4월, 성도들은 <b>고성리</b>에 예배당 신축을 위한 기초공사를 시작했습니다.
+          5월에는 손수 <b>돌을 하나하나 쌓아</b> 벽을 올렸고, 마침내 그해 12월 9일,
+          <b>42평 돌 성전</b>을 헌당했습니다. 전쟁이 아직 끝나지 않은 시절,
+          빈손의 피난민들이 일군 <b>제주 최초의 재림교회 성전</b>이었습니다.</p>
+        <p>‘전란 중에 핀 꽃’ — 이 길의 이름은 바로 이 성전에서 비롯되었습니다.
+          빈손의 피난민들이 일군 <b>제주 최초의 재림교회 성전</b>이었습니다.</p>
+        <blockquote>돌 한 덩이마다 새겨진 기도가, 70여 년을 건너 오늘에 닿았습니다.</blockquote>
+        <div><span class="pill">제주 최초 재림 성전</span><span class="pill">1951 헌당</span></div>
+        <p class="walk">🥾 고성리 마을 안, 첫 성전이 세워진 자리로 향합니다.</p>
+      </div>
+    </section>
+
+    <!-- STOP 6 -->
+    <section class="stop">
+      <div class="rail"></div>
+      <div class="head">
+        <div class="dot">6</div>
+        <div class="titlebox">
+          <div class="when">오늘 · 되찾아야 할 이름</div>
+          <h3>성산 피난교회 옛 터 — 회복을 기다리며</h3>
+          <p class="place">성산읍 고성리 (※정확한 위치 확인 중)</p>
+        </div>
+      </div>
+      <div class="body">
+        <p>그러나 70여 년이 흐른 지금, 그 첫 성전은 더 이상 예배의 자리가 아닙니다.
+          건물은 교회를 떠나 <b>지금은 식당으로 쓰이고</b> 있습니다.
+          제주 복음의 출발점이자 전란 속 나눔의 증거였던 공간이, 이름을 잃은 채 서 있는 것입니다.</p>
+        <p>재림교회는 이곳을 <b>제주 복음 역사를 간직한 문화유산</b>으로 보고,
+          <b>문화유산 등록과 ‘되찾기’ 운동</b>을 이어가고 있습니다.
+          순례의 마지막 정류장에서 우리는 단지 과거를 기념하는 데 그치지 않고,
+          <b>회복해야 할 이야기</b> 하나를 가슴에 안고 돌아갑니다.</p>
+        <blockquote>되찾는다는 것은 건물을 되사는 일이 아니라, 그 정신을 다음 세대가 이어받는 일입니다.</blockquote>
+        <div><span class="pill">순례 종착점</span><span class="pill">문화유산 등록 추진</span><span class="pill">스탬프·기념핀</span></div>
+        <p class="walk">🥾 순례의 끝. 옛 성전 앞에서 완주 스탬프를 찍고 기념핀을 받습니다.</p>
+      </div>
+    </section>
+
+    <!-- 어르신들의 증언 -->
+    <section class="voices">
+      <h2>그날을 기억하는 목소리</h2>
+      <p class="sub">재림신문 ‘권태건의 내러티브 리포트’에 담긴 성산 어르신들의 실제 증언입니다.</p>
+
+      <div class="voice">
+        <div class="who">현춘홍 어르신 <span>· 88세, 성산읍 오조리</span></div>
+        <p class="q">“안식일교인들이 성산을 살렸다.”</p>
+        <p style="margin-top:8px;">콜레라 같은 괴질에도 목숨을 잃던 시절, 서울위생병원 제주분원은 약을 처방하고
+          상상도 못 하던 맹장 수술까지 해냈습니다. 소문이 퍼지자 멀리 <b>모슬포에서 걸어와</b> 진료받는 이도 있었습니다.
+          피난교회가 서기 전, 성도들은 <b>성산일출봉 풀밭에 앉아 찬미하고 말씀을 들었습니다.</b>
+          훗날 서울 청량리에서 ‘위생병원’ 간판을 마주친 그는 자신도 모르게 눈물을 흘렸다고 합니다.</p>
+      </div>
+
+      <div class="voice">
+        <div class="who">김태자 어르신 <span>· 83세, 성산읍 고성리</span></div>
+        <p class="q">“아가리배에서 내린 그 사람들은 우리를 위해 온 천사였어요.”</p>
+        <p style="margin-top:8px;">그는 그때 난생처음 현대적인 병원 진료와 예방주사를 경험했습니다.
+          배가 아프면 숯가루 탄 물을 마시던 시절이었습니다.
+          <b>외국인 간호사가 DDT를 놓아주던</b> 장면을 또렷이 기억했습니다 — 외국인을 본 것도 그때가 처음이었습니다.</p>
+      </div>
+
+      <div class="voice">
+        <div class="who">외국인 의료진 <span>· 류은혜(Grace Rue)·간호원장 리보순(Robson)</span></div>
+        <p>류제한 박사의 부인 류은혜 여사와 외국인 간호원장 리보순 씨는 전쟁이 터진 뒤에도
+          고국으로 돌아가지 않고 제주까지 내려와 의료 봉사를 이어갔습니다.
+          낯선 섬의 환자들 곁을 지킨 그 마음이, 제주 사람들에게 ‘천사’로 기억되었습니다.</p>
+      </div>
+
+      <div class="voice">
+        <div class="who">기록 <span>· 오만규, 『한국 재림교회 100년사』</span></div>
+        <p class="q">“2년에 걸친 제주도 피난생활의 열매는, 무엇보다 성산포 일대에서 얻은 소수의 영혼일 것이다.”</p>
+        <p style="margin-top:8px;">피난민들이 육지로 돌아간 뒤에도, 그곳에서 얻은 적은 수의 성도들이
+          교회를 지키는 주춧돌이 되었다고 기록은 전합니다.
+          성전을 세울 때 <b>남자 교인들은 어깨에 돌덩이를 이고, 여자 교인들은 치마폭에 모래를 담아 날랐습니다.</b></p>
+      </div>
+    </section>
+
+    <!-- 마무리 -->
+    <section class="closing">
+      <h2>길의 끝에서</h2>
+      <p class="verse">“너는 두려워하지 말라 내가 너와 함께 함이라.”</p>
+      <p>한 척의 배에서 시작된 이야기가 한 채의 성전으로 맺혔습니다.
+        성산의 성도가 수십 명에 불과하던 그 시절을 지나, 오늘 제주에는 <b>1,200명이 넘는 성도</b>가 있고
+        <b>제주대회</b>가 세워졌습니다.</p>
+      <p>이 길을 걸은 당신의 발걸음이, 다음 세대에게 전해질 또 하나의 이야기가 됩니다.</p>
+    </section>
+  </main>
+
+  <footer>
+    출처: 한국 재림교회 역사 · 디지털제주문화대전 · 재림교회 스토리(성산교회 선교 70돌) · 재림신문(재림마을) ·
+    한국민족문화대백과사전 · 삼육서울병원 역사관 — 1차 수집 2026-06-22<br>
+    ※ 일부 서술은 수집된 사료를 바탕으로 한 내러티브 재구성이며, 좌표·세부 연혁은 실측·확인 보정 예정입니다.
+  </footer>
+</body>
+</html>
